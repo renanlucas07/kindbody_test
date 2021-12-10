@@ -1,0 +1,102 @@
+[
+  {
+    zipcode: '11238',
+    tier: 'A'
+  },
+  {
+    zipcode: '11244',
+    tier: 'A'
+  },
+  {
+    zipcode: '11216',
+    tier: 'A'
+  },
+  {
+    zipcode: '11217',
+    tier: 'A'
+  },
+  {
+    zipcode: '10004',
+    tier: 'A'
+  },
+  {
+    zipcode: '11248',
+    tier: 'A'
+  },
+  {
+    zipcode: '11254',
+    tier: 'A'
+  },
+  {
+    zipcode: '11240',
+    tier: 'A'
+  },
+  {
+    zipcode: '11255',
+    tier: 'A'
+  },
+  {
+    zipcode: '11221',
+    tier: 'A'
+  },
+  {
+    zipcode: '11201',
+    tier: 'A'
+  },
+  {
+    zipcode: '11205',
+    tier: 'A'
+  },
+  {
+    zipcode: '11206',
+    tier: 'A'
+  },
+  {
+    zipcode: '11237',
+    tier: 'B'
+  },
+  {
+    zipcode: '10005',
+    tier: 'B'
+  },
+  {
+    zipcode: '10271',
+    tier: 'B'
+  },
+  {
+    zipcode: '10280',
+    tier: 'B'
+  },
+  {
+    zipcode: '10038',
+    tier: 'B'
+  },
+  {
+    zipcode: '10006',
+    tier: 'B'
+  },
+  {
+    zipcode: '07097',
+    tier: 'C'
+  },
+  {
+    zipcode: '07303',
+    tier: 'C'
+  },
+  {
+    zipcode: '07308',
+    tier: 'C'
+  },
+  {
+    zipcode: '07399',
+    tier: 'C'
+  },
+  {
+    zipcode: '07309',
+    tier: 'C'
+  },
+  {
+    zipcode: '10046',
+    tier: 'C'
+  }
+]

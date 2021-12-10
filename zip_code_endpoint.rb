@@ -1,15 +1,24 @@
 # frozen_string_literal: true
 
+require 'faraday'
+require 'json'
+require 'byebug'
+require 'yaml'
+
 # Endpoint for zip codes within radius
 class ZipCodeEndpoint
   class << self
     def get_zip_in_radius(zipcode, radius, units = 'mile')
+      @zipcode = zipcode
+      @radius  = radius
+      @units   = units
+
       # 1. Get list of ZIP codes in radius from starting zip code point
-      extracted_zips_from_api = extract_zip_codes_from_api(zipcode, radius, units)
+      extracted_zips_from_api = extract_zip_codes_from_api
       return [] unless extracted_zips_from_api
 
       # 2. find all ZIP codes in the DB that match the response, and sort by tier ASC
-      extracted_zips_from_db = extract_zip_codes_from_db(extracted_zips_from_api['zip_codes']).to_a
+      extracted_zips_from_db = extract_zip_codes_from_db(extracted_zips_from_api['zip_codes'])
 
       # 3. Sort ZIP codes in the same tier by distance
       sort_extracted_zips_from_db_by_distance(extracted_zips_from_api['zip_codes_with_distance'],
@@ -38,9 +47,8 @@ class ZipCodeEndpoint
       response
     end
 
-    #1
-    def extract_zip_codes_from_api(zipcode, radius, units)
-      zip_data = call_zip_codes_api(zipcode, radius, units)
+    def extract_zip_codes_from_api
+      zip_data = call_zip_codes_api
       return nil unless zip_data
 
       tmp_array_of_zips = { 'zip_codes' => [], 'zip_codes_with_distance' => {} }
@@ -51,9 +59,8 @@ class ZipCodeEndpoint
       tmp_array_of_zips
     end
 
-    #2
-    def call_zip_codes_api(zipcode, radius, units)
-      url = "https://www.zipcodeapi.com/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{zipcode}/#{radius}/#{units}"
+    def call_zip_codes_api
+      url = "https://www.zipcodeapi.com/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{@zipcode}/#{@radius}/#{@units}"
       zip_response = Faraday.send(:post, url)
       return nil unless zip_response.success?
 
@@ -62,7 +69,21 @@ class ZipCodeEndpoint
 
     def extract_zip_codes_from_db(zipcodes)
       tier_values = %w[A B C]
-      PartnerClinic.where('zipcode IN (?)', zipcodes).where('tier IN (?)', tier_values).order('tier ASC')
+      # PartnerClinic.where('zipcode IN (?) AND tier IN (?)', zipcodes, tier_values).order('tier ASC')
+      YAML.load_file('clinics.yml').map do |item|
+        OpenStruct.new(
+          {
+            zipcode: item['zipcode'],
+            tier: item['tier'],
+            name: '',
+            address: '',
+            city: '',
+            state: '',
+            contact_email: '',
+            contact_name: ''
+          }
+        )
+      end
     end
 
     def sort_extracted_zips_from_db_by_distance(zip_codes_with_distance, zip_codes_from_db)
