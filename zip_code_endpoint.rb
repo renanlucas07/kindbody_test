@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Endpoint for zip codes within radius
 class ZipCodeEndpoint
   class << self
     def get_zip_in_radius(zipcode, radius, units = 'mile')
@@ -9,7 +12,8 @@ class ZipCodeEndpoint
       extracted_zips_from_db = extract_zip_codes_from_db(extracted_zips_from_api['zip_codes']).to_a
 
       # 3. Sort ZIP codes in the same tier by distance
-      sort_extracted_zips_from_db_by_distance(extracted_zips_from_api['zip_codes_with_distance'], extracted_zips_from_db)
+      sort_extracted_zips_from_db_by_distance(extracted_zips_from_api['zip_codes_with_distance'],
+                                              extracted_zips_from_db)
 
       format_response(extracted_zips_from_db, extracted_zips_from_api['zip_codes_with_distance'])
     end
@@ -34,6 +38,7 @@ class ZipCodeEndpoint
       response
     end
 
+    #1
     def extract_zip_codes_from_api(zipcode, radius, units)
       zip_data = call_zip_codes_api(zipcode, radius, units)
       return nil unless zip_data
@@ -46,6 +51,7 @@ class ZipCodeEndpoint
       tmp_array_of_zips
     end
 
+    #2
     def call_zip_codes_api(zipcode, radius, units)
       url = "https://www.zipcodeapi.com/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{zipcode}/#{radius}/#{units}"
       zip_response = Faraday.send(:post, url)
@@ -55,7 +61,7 @@ class ZipCodeEndpoint
     end
 
     def extract_zip_codes_from_db(zipcodes)
-      tier_values = ['A', 'B', 'C']
+      tier_values = %w[A B C]
       PartnerClinic.where('zipcode IN (?)', zipcodes).where('tier IN (?)', tier_values).order('tier ASC')
     end
 
