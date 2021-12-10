@@ -59,7 +59,7 @@ class ZipCodeEndpoint
 
     def call_zip_codes_api
       url = "https://www.zipcodeapi.com/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{@zipcode}/#{@radius}/#{@units}"
-      zip_response = Faraday.send(:post, url)
+      zip_response = Faraday.get(url)
       return nil unless zip_response.success?
 
       JSON.parse(zip_response.body)
