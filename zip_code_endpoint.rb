@@ -4,6 +4,7 @@ require 'faraday'
 require 'json'
 require 'byebug'
 require 'yaml'
+require 'awesome_print'
 
 # Endpoint for zip codes within radius
 class ZipCodeEndpoint
@@ -18,7 +19,7 @@ class ZipCodeEndpoint
       return [] unless extracted_zips_from_api
 
       # 2. find all ZIP codes in the DB that match the response, and sort by tier ASC
-      extracted_zips_from_db = extract_zip_codes_from_db(extracted_zips_from_api['zip_codes'])
+      extracted_zips_from_db = extract_zip_codes_from_db(extracted_zips_from_api['zip_codes']).to_a
 
       # 3. Sort ZIP codes in the same tier by distance
       sort_extracted_zips_from_db_by_distance(extracted_zips_from_api['zip_codes_with_distance'],
@@ -30,9 +31,8 @@ class ZipCodeEndpoint
     private
 
     def format_response(sorted_zips, zip_codes_with_distance)
-      response = []
-      sorted_zips.each do |item|
-        tmp_item = {
+      sorted_zips.map do |item|
+        {
           name: item.name,
           address: item.address,
           city: item.city,
@@ -42,9 +42,7 @@ class ZipCodeEndpoint
           contact_email: item.contact_email,
           contact_name: item.contact_name
         }
-        response.push(tmp_item)
       end
-      response
     end
 
     def extract_zip_codes_from_api
