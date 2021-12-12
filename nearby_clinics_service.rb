@@ -22,11 +22,10 @@ class NearbyClinicsService
     return [] unless @extracted_zips_from_api
 
     # 2. find all ZIP codes in the DB that match the response, and sort by tier ASC
-    extracted_zips_from_db = extract_zip_codes_from_db
+    extract_zip_codes_from_db
 
     # 3. Format response then sort by tier and distance
-    formatted_response = format_response(extracted_zips_from_db)
-    formatted_response.sort_by { |z| [z[:tier], z[:distance]] }
+    format_response(@extracted_zips_from_db).sort_by { |z| [z[:tier], z[:distance]] }
   end
 
   private
@@ -70,8 +69,10 @@ class NearbyClinicsService
   def extract_zip_codes_from_db
     zipcodes = @extracted_zips_from_api[:zip_codes]
     tier_values = %w[A B C]
-    # PartnerClinic.where('zipcode IN (?)', zipcodes).where('tier IN (?)', tier_values).order('tier ASC')
-    YAML.load_file('clinics.yml').map do |item|
+    # @extracted_zips_from_db = PartnerClinic.where('zipcode IN (?)', zipcodes)
+    #                                        .where('tier IN (?)', tier_values)
+    #                                        .order('tier ASC')
+    @extracted_zips_from_db = YAML.load_file('clinics.yml').map do |item|
       OpenStruct.new(
         {
           zipcode: item['zipcode'],
@@ -85,7 +86,5 @@ class NearbyClinicsService
         }
       )
     end
-  end
-end
   end
 end
