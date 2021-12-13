@@ -13,6 +13,8 @@ require 'awesome_print'
 class NearbyClinicsService
   attr_reader :zipcode, :radius, :units
 
+  BASE_URL = 'https://www.zipcodeapi.com'
+
   def initialize(zipcode, radius, units = 'mile')
     @zipcode = zipcode
     @radius  = radius
@@ -62,7 +64,7 @@ class NearbyClinicsService
   end
 
   def call_zip_codes_api
-    url = "https://www.zipcodeapi.com/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{zipcode}/#{radius}/#{units}"
+    url = "#{BASE_URL}/rest/#{ENV['ZIP_CODE_API_KEY']}/radius.json/#{zipcode}/#{radius}/#{units}"
     zip_response = Faraday.get(url)
     return nil unless zip_response.success?
 
