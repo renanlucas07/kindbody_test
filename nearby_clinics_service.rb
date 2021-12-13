@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support'
+require 'rake'
+require 'rspec'
 require 'faraday'
 require 'json'
 require 'byebug'
