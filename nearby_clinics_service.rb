@@ -58,7 +58,7 @@ class NearbyClinicsService
     @zip_data['zip_codes'].each { |z| zip_codes_distance[z['zip_code']] = z['distance'] }
 
     @extracted_zips_from_api = {
-      zip_codes: @zip_data['zip_codes'].map(&->(z) { z['zip_code'] }),
+      zip_codes: @zip_data['zip_codes'].map{ |z| ['zip_code'] },
       zip_codes_with_distance: zip_codes_distance
     }
   end
