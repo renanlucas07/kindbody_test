@@ -1,0 +1,31 @@
+[{
+  zip_code: '11238',
+  distance: '4.626'
+}, {
+  zip_code: '11244',
+  distance: '4.549'
+}, {
+  zip_code: '11206',
+  distance: '3.52'
+}, {
+  zip_code: '11237',
+  distance: '4.106'
+}, {
+  zip_code: '10005',
+  distance: '3.156'
+}, {
+  zip_code: '10271',
+  distance: '3.073'
+}, {
+  zip_code: '10280',
+  distance: '3.206'
+}, {
+  zip_code: '07399',
+  distance: '4.931'
+}, {
+  zip_code: '07309',
+  distance: '3.655'
+}, {
+  zip_code: '10046',
+  distance: '2.955'
+}]

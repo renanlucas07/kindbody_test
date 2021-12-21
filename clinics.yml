@@ -1,0 +1,42 @@
+[
+  {
+    zipcode: '11238',
+    tier: 'A'
+  },
+  {
+    zipcode: '11244',
+    tier: 'A'
+  },
+  {
+    zipcode: '11206',
+    tier: 'A'
+  },
+  {
+    zipcode: '11237',
+    tier: 'B'
+  },
+  {
+    zipcode: '10005',
+    tier: 'B'
+  },
+  {
+    zipcode: '10271',
+    tier: 'B'
+  },
+  {
+    zipcode: '10280',
+    tier: 'B'
+  },
+  {
+    zipcode: '07399',
+    tier: 'C'
+  },
+  {
+    zipcode: '07309',
+    tier: 'C'
+  },
+  {
+    zipcode: '10046',
+    tier: 'C'
+  }
+]
